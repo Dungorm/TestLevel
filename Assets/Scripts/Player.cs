@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,6 @@ public class Player : MonoBehaviour
     private float playerHeight;
 
     private float playerRadius; 
-
 
     private void Awake() {
         CapsuleCollider collider = this.transform.GetChild(0).gameObject.GetComponent<CapsuleCollider>();
@@ -29,7 +29,6 @@ public class Player : MonoBehaviour
     private void HandleMovement() {
         float horInput = Input.GetAxisRaw("Horizontal");
         float verInput = Input.GetAxisRaw("Vertical");
-        Debug.Log(verInput);
         Camera camera = Camera.main;
 
         Vector3 camForward = camera.transform.forward;
@@ -70,6 +69,14 @@ public class Player : MonoBehaviour
     private bool CanMove(Vector3 moveDir, float moveDistance) {
         Vector3 point1 = transform.position + Vector3.up * playerRadius;
         Vector3 point2 = transform.position + Vector3.up * (playerHeight - playerRadius);
-        return !Physics.CapsuleCast(point1, point2, playerRadius, moveDir, moveDistance);
+        return !Physics.CapsuleCast(point1, point2, playerRadius, moveDir, moveDistance, getLayerMask());
+        // return true;
     }
+
+    private LayerMask getLayerMask() {
+        String[] layerNames = new String[1];
+        layerNames[0] = "Default";
+        return LayerMask.GetMask(layerNames);
+    }
+
 }

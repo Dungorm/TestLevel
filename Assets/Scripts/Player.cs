@@ -18,7 +18,13 @@ public class Player : MonoBehaviour
         CapsuleCollider collider = this.transform.GetChild(0).gameObject.GetComponent<CapsuleCollider>();
         this.playerHeight = collider.transform.localScale.y * collider.height;
         this.playerRadius = collider.transform.localScale.y * collider.radius;
+        // Прекрепляем курсор к середине экрана
+        Cursor.lockState = CursorLockMode.Locked;
+        // и делаем его невидимым
+        Cursor.visible = false;
     }
+
+   
 
     // Update is called once per frame
     void Update()
